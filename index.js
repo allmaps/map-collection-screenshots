@@ -12,8 +12,8 @@ const viewport = {
 }
 
 async function takeScreenshot (browser, id, url) {
-  const filename = `screenshots/${id}.png`
-  const smallFilename = `screenshots/${id}.jpg`
+  const filename = `images/${id}.png`
+  const smallFilename = `images/${id}.jpg`
 
   const page = await browser.newPage()
   await page.setViewport(viewport)
