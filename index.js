@@ -12,18 +12,25 @@ const viewport = {
 }
 
 async function takeScreenshot (browser, id, url) {
+  console.log(`Taking screenshots for ${id}...`)
+
   const filename = `images/${id}.png`
-  const smallFilename = `images/${id}.jpg`
+  const jpgFilename = `images/${id}.jpg`
+  const smallFilename = `images/${id}-small.jpg`
 
   const page = await browser.newPage()
   await page.setViewport(viewport)
   await page.goto(url, {
-    waitUntil: ['domcontentloaded', 'networkidle2']
+    waitUntil: ['domcontentloaded', 'networkidle2'],
+    timeout: 0
   })
   await page.screenshot({ path: filename })
 
   await sharp(filename)
-    .resize(400)
+    .toFile(jpgFilename)
+
+  await sharp(filename)
+    .resize(viewport.width / 2)
     .toFile(smallFilename)
 }
 
